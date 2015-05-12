@@ -6,7 +6,7 @@ class ListAndItemModelTest(TestCase):
     def test_saving_and_retrieving_items(self):
         list_ = List()
         list_.save()
-        
+
         first_item = Item()
         first_item.text = 'The first (ever) list item'
         first_item.list = list_
