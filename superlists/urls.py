@@ -1,11 +1,11 @@
 from django.conf.urls import  include, url
 from django.contrib import admin
 
-import lists
+from lists.views import home_page
 
 urlpatterns = [
     # Examples:
-    url(r'^$', lists.views.home_page, name='home'),
+    url(r'^$', home_page, name='home'),
     url(r'^lists/', include('lists.urls'))
     # url(r'^blog/', include('blog.urls')),
 
