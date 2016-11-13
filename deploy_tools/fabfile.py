@@ -1,20 +1,21 @@
-from fabric.contrib.files import append, exists, sed
-from fabric.api import env, local, run
 import random
 
-REPO_URL = 'ssh://dawid@weckowski.net:/home/anduril/repos/git/testinggoat.git'
+from fabric.contrib.files import append, exists, sed
+from fabric.api import env, local, run
+
+REPO_URL = 'git@github.com:weceq/testinggoat.git'
 
 def deploy():
     site_folder = '/home/%s/www/%s' % (env.user, env.host)
     source_folder = site_folder + '/source'
-    _create_directory_structure_id_necessary(site_folder)
+    _create_directory_structure_if_necessary(site_folder)
     _get_latest_source(source_folder)
     _update_settings(source_folder, env.host)
     _update_virtualenv(source_folder)
     _update_static_files(source_folder)
     _update_database(source_folder)
 
-def _create_directory_structure_id_necessary(site_folder):
+def _create_directory_structure_if_necessary(site_folder):
     for subfolder in ('database', 'static', 'virtualenv', 'source'):
         run('mkdir -p %s/%s' % (site_folder, subfolder))
 
@@ -30,9 +31,9 @@ def _update_settings(source_folder, site_name):
     settings_path = source_folder + '/superlists/settings.py'
     sed(settings_path, "DEBUG = True", "DEBUG = False")
     sed(settings_path,
-            'ALLOWED_HOSTS =.+$',
-            'ALLOWED_HOSTS = ["%s"]' % (site_name,)
-    )
+        'ALLOWED_HOSTS =.+$',
+        'ALLOWED_HOSTS = ["%s"]' % (site_name,)
+       )
     secret_key_file = source_folder + '/superlists/secret_key.py'
     if not exists(secret_key_file):
         chars = 'abcdefghijklmnopqrstuvwxyz1234567890!@#$%^&*()-_=+'
@@ -58,4 +59,3 @@ def _update_database(source_folder):
     run('cd %s && ../virtualenv/bin/python3 manage.py migrate --noinput' % (
         source_folder,
     ))
-
