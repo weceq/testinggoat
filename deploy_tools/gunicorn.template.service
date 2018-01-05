@@ -1,17 +1,17 @@
 [Unit]
-Description=gunicorn daemon
-# Requires=gunicorn.socket
+Description=SITENAME gunicorn daemon
+Requires=gunicorn.SITENAME.socket
 After=network.target
 
 [Service]
-PIDFile=/run/gunicorn/pid
-User=dawid
-Group=dawid
-WorkingDirectory=/home/dawid/www/SITENAME/source
-ExecStart=/home/dawid/www/SITENAME/virtualenv/bin/gunicorn --bind unix:/tmp/SITENAME.socket --pid /run/gunicorn/pid superlists.wsgi:application
+PIDFile=/run/gunicorn.SITENAME/pid
+User=USERNAME
+Group=USERNAME
+WorkingDirectory=/home/USERNAME/www/SITENAME/source
+ExecStart=/home/USERNAME/www/SITENAME/virtualenv/bin/gunicorn --bind unix:/run/gunicorn.SITENAME/socket --pid /run/gunicorn.SITENAME/pid superlists.wsgi:application
 ExecReload=/bin/kill -s HUP $MAINPID
 ExecStop=/bin/kill -s TERM $MAINPID
-PrivateTmp=false
+PrivateTmp=true
 
 [Install]
 WantedBy=multi-user.target

@@ -10,8 +10,10 @@ Provisioning a new site
 * virtualenv
 
 eg, on Debian:
+    ```
     sudo apt-get install nginx git python3 python3-pip
     sudo pip install virtualenv
+    ```
 
 ## Nginx virtual host config
 
@@ -20,18 +22,30 @@ eg, on Debian:
 
 ## Systemd service
 
-* see gunicorn.template.service
+* see gunicorn.template.service, gunicorn.template.socket
+  and gunicorn.template.conf
 * replace SITENAME with your domain name, eg. staging.my-domain.com
+* replace USERNAME with your user that will start gunicorn
+* replace GROUPNAME with your user's group that will start gunicorn
+* rename the files, replacing `template` with domain name (SITENAME value)
 
 ## Folder structure
 
-Assume we have a user account at /home/username
+Assume we have a user account at /home/USERNAME
 
-/home/dawid/www
+/home/USERNAME/www
 └── SITENAME
     ├── database
     ├── source
     ├── static
     └── virtualenv
 
-5 directories, 0 files
+## Deploy
+
+Use provided Fabric script, eg:
+
+    ```
+    cd deploy_tools
+    fab deploy:host=username@staging.my-domain.com
+    ```
+
