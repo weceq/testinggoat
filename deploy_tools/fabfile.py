@@ -3,7 +3,7 @@ import random
 from fabric.contrib.files import append, exists, sed
 from fabric.api import env, local, run
 
-REPO_URL = 'git@github.com:weceq/testinggoat.git'
+REPO_URL = 'https://github.com/weceq/testinggoat.git'
 
 def deploy():
     site_folder = '/home/%s/www/%s' % (env.user, env.host)
