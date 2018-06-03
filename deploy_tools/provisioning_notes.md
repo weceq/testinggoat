@@ -29,6 +29,14 @@ eg, on Debian:
 * replace GROUPNAME with your user's group that will start gunicorn
 * rename the files, replacing `template` with domain name (SITENAME value)
 
+## Automatically preparing config files
+
+For automatic preparation of config files use `initial_deploy.sh` script:
+
+```
+initial_deploy.sh <sitename> <username> <groupname>
+```
+
 ## Folder structure
 
 Assume we have a user account at /home/USERNAME
